@@ -7,7 +7,7 @@ import CopyButton from '@/components/CopyButton'
 
 export default async function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const supabase = getAdmin()
+  const supabase = getAdmin() as any
   
   const { data: order } = await supabase
     .from('orders')

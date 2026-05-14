@@ -4,7 +4,7 @@ import AdminLayout from '@/components/AdminLayout'
 import StatusBadge from '@/components/StatusBadge'
 
 export default async function AdminOrders() {
-  const db = getAdmin()
+  const db = getAdmin() as any
   const { data } = await db
     .from('orders')
     .select('*')

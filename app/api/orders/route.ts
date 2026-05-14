@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   }
 
   const tracking_code = generateTrackingCode()
-  const supabase = getAdmin()
+  const supabase = getAdmin() as any
 
   // Prepare order data
   const orderData: any = {
@@ -154,11 +154,10 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const supabase = getAdmin()
+  const supabase = getAdmin() as any
   const { data, error } = await (supabase
     .from('orders')
     .select('*, packages(*)')
-    .order('created_at', { ascending: false }) as any)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data)
