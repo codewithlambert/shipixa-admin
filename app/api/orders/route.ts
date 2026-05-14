@@ -155,9 +155,10 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   const supabase = getAdmin() as any
-  const { data, error } = await (supabase
+  const { data, error } = await supabase
     .from('orders')
     .select('*, packages(*)')
+    .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data)
