@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Bottom */}
       <div className="px-4 py-6 border-t border-gray-100 space-y-1">
-        <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer"
+        <a href={process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'https://shipixa.vercel.app'} target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition">
           <span>🌐</span> View Site
         </a>
