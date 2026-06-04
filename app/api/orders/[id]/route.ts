@@ -19,6 +19,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json()
   const supabase = getAdmin()
   
+  // Get the current order to check if receiver_email changed
+  const { data: oldOrder } = await (supabase
+    .from('orders')
+    .select('receiver_email, tracking_code, product_name, origin, destination, estimated_delivery, currency, price')
+    .eq('id', id)
+    .single() as any)
+  
   // Extract only the fields that can be updated
   const {
     product_name,
@@ -71,6 +78,67 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  
+  // Send email notification if receiver_email changed
+  if (oldOrder && receiver_email !== undefined && receiver_email !== oldOrder.receiver_email && receiver_email) {
+    try {
+      const brevoKey = process.env.BREVO_SMTP_KEY
+      const fromEmail = process.env.FROM_EMAIL || 'shipshipixa@gmail.com'
+      
+      if (brevoKey) {
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'https://shipixa.vercel.app'
+        const trackingUrl = `${siteUrl}/track/${oldOrder.tracking_code}?email=${encodeURIComponent(receiver_email)}`
+        
+        const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'api-key': brevoKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: 'Shipixa', email: fromEmail },
+            to: [{ email: receiver_email, name: receiver_name || 'Recipient' }],
+            subject: `Your Shipment Information — Tracking Code: ${oldOrder.tracking_code}`,
+            htmlContent: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #f97316;">Your Shipment Information</h2>
+                <p>Hello <strong>${receiver_name || 'Recipient'}</strong>,</p>
+                <p>Your shipment <strong>${data.product_name || oldOrder.product_name}</strong> information has been updated. Here are your tracking details:</p>
+                <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 15px; margin: 20px 0;">
+                  <p style="margin: 0; font-size: 14px; color: #666;">Tracking Code</p>
+                  <p style="margin: 5px 0 0; font-size: 24px; font-weight: bold; color: #1f2937; font-family: monospace;">${oldOrder.tracking_code}</p>
+                </div>
+                <p><strong>Shipment Details:</strong></p>
+                <ul style="color: #666;">
+                  <li>From: ${data.origin || oldOrder.origin}</li>
+                  <li>To: ${data.destination || oldOrder.destination}</li>
+                  ${data.estimated_delivery || oldOrder.estimated_delivery ? `<li>Estimated Delivery: ${new Date(data.estimated_delivery || oldOrder.estimated_delivery).toLocaleDateString()}</li>` : ''}
+                </ul>
+                ${data.price || oldOrder.price ? `
+                <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0;">
+                  <p style="margin: 0; font-size: 14px; color: #666;">Payment Required</p>
+                  <p style="margin: 5px 0 0; font-size: 20px; font-weight: bold; color: #1f2937;">${data.currency || oldOrder.currency || 'USD'} ${parseFloat(data.price || oldOrder.price).toFixed(2)}</p>
+                </div>` : ''}
+                <a href="${trackingUrl}" style="display:inline-block;background:#f97316;color:white;padding:12px 30px;text-decoration:none;border-radius:8px;font-weight:bold;margin:20px 0;">Track Your Shipment →</a>
+                <p style="color:#999;font-size:12px;margin-top:30px;">This is an automated message from Shipixa.</p>
+              </div>
+            `
+          })
+        })
+        
+        if (!emailResponse.ok) {
+          const errorText = await emailResponse.text()
+          console.error('[Orders PATCH API] Brevo email error:', errorText)
+        } else {
+          const result = await emailResponse.json()
+          console.log('[Orders PATCH API] Email sent to:', receiver_email, 'Message ID:', result.messageId)
+        }
+      }
+    } catch (emailError) {
+      console.error('[Orders PATCH API] Failed to send email notification:', emailError)
+    }
+  }
+  
   return NextResponse.json(data)
 }
 
