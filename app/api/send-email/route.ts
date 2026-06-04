@@ -8,37 +8,34 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Use Resend API to send email
-    const resendApiKey = process.env.RESEND_API_KEY
-    const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev'
+    const brevoKey = process.env.BREVO_SMTP_KEY
+    const fromEmail = process.env.FROM_EMAIL || 'igweajurijosph@gmail.com'
 
-    if (!resendApiKey) {
-      console.error('RESEND_API_KEY not configured')
+    if (!brevoKey) {
       return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
     }
 
-    const response = await fetch('https://api.resend.com/emails', {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        'api-key': brevoKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: `Shipixa <${fromEmail}>`,
-        to: [to],
+        sender: { name: 'Shipixa', email: fromEmail },
+        to: [{ email: to }],
         subject,
-        html,
+        htmlContent: html,
       }),
     })
 
     if (!response.ok) {
       const error = await response.text()
-      console.error('Resend API error:', error)
+      console.error('Brevo error:', error)
       return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
     }
 
-    const data = await response.json()
-    return NextResponse.json({ success: true, id: data.id })
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Send email error:', error)
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
