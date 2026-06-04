@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     if (!brevoKey) {
       console.error('[Orders API] BREVO_SMTP_KEY not configured')
     } else {
-      const trackingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/track/${tracking_code}?email=${encodeURIComponent(receiver_email)}`
+      const trackingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://shipixa.vercel.app'}/track/${tracking_code}?email=${encodeURIComponent(receiver_email)}`
 
       const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
