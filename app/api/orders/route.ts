@@ -75,64 +75,46 @@ export async function POST(req: NextRequest) {
 
   // Send welcome email to receiver with tracking code and link
   try {
-    const resendApiKey = process.env.RESEND_API_KEY
-    const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev'
+    const brevoKey = process.env.BREVO_SMTP_KEY
+    const fromEmail = process.env.FROM_EMAIL || 'igweajurijosph@gmail.com'
 
-    if (!resendApiKey) {
-      console.error('RESEND_API_KEY not configured')
+    if (!brevoKey) {
+      console.error('BREVO_SMTP_KEY not configured')
     } else {
-      const trackingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/track/${tracking_code}`
-      
-      // Send email directly using Resend API
-      const emailResponse = await fetch('https://api.resend.com/emails', {
+      const trackingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/track/${tracking_code}?email=${encodeURIComponent(receiver_email)}`
+
+      const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${resendApiKey}`,
+          'api-key': brevoKey,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: `Shipixa <${fromEmail}>`,
-          to: [receiver_email],
+          sender: { name: 'Shipixa', email: fromEmail },
+          to: [{ email: receiver_email, name: receiver_name }],
           subject: `Your Shipment is Ready - Tracking Code: ${tracking_code}`,
-          html: `
+          htmlContent: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h2 style="color: #f97316;">Your Shipment Has Been Created!</h2>
               <p>Hello <strong>${receiver_name}</strong>,</p>
-              <p>Great news! Your shipment <strong>${product_name}</strong> has been created and is ready for tracking.</p>
-              
+              <p>Your shipment <strong>${product_name}</strong> has been created and is ready for tracking.</p>
               <div style="background: #fff7ed; border-left: 4px solid #f97316; padding: 15px; margin: 20px 0;">
                 <p style="margin: 0; font-size: 14px; color: #666;">Tracking Code</p>
-                <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: #1f2937; font-family: monospace;">${tracking_code}</p>
+                <p style="margin: 5px 0 0; font-size: 24px; font-weight: bold; color: #1f2937; font-family: monospace;">${tracking_code}</p>
               </div>
-
               ${price && parseFloat(price) > 0 ? `
-                <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0;">
-                  <p style="margin: 0; font-size: 14px; color: #666;">Payment Required</p>
-                  <p style="margin: 5px 0 0 0; font-size: 20px; font-weight: bold; color: #1f2937;">${currency} ${parseFloat(price).toFixed(2)}</p>
-                  <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">Please complete payment to access your shipment details.</p>
-                </div>
-              ` : ''}
-
+              <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0;">
+                <p style="margin: 0; font-size: 14px; color: #666;">Payment Required</p>
+                <p style="margin: 5px 0 0; font-size: 20px; font-weight: bold; color: #1f2937;">${currency} ${parseFloat(price).toFixed(2)}</p>
+              </div>` : ''}
               <p><strong>Shipment Details:</strong></p>
               <ul style="color: #666;">
                 <li>From: ${origin}</li>
                 <li>To: ${destination}</li>
                 ${estimated_delivery ? `<li>Estimated Delivery: ${new Date(estimated_delivery).toLocaleDateString()}</li>` : ''}
-                ${packages?.length ? `<li>Packages: ${packages.length}</li>` : ''}
               </ul>
-
-              <a href="${trackingUrl}" style="display: inline-block; background: #f97316; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0;">
-                Track Your Shipment →
-              </a>
-
-              <p style="color: #999; font-size: 12px; margin-top: 30px;">
-                You can track your shipment anytime at: <a href="${trackingUrl}" style="color: #f97316;">${trackingUrl}</a>
-              </p>
-
-              <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-              <p style="color: #999; font-size: 12px;">
-                This is an automated message from Shipixa. Please do not reply to this email.
-              </p>
+              <a href="${trackingUrl}" style="display:inline-block;background:#f97316;color:white;padding:12px 30px;text-decoration:none;border-radius:8px;font-weight:bold;margin:20px 0;">Track Your Shipment →</a>
+              <p style="color:#999;font-size:12px;margin-top:30px;">This is an automated message from Shipixa.</p>
             </div>
           `
         })
@@ -140,14 +122,13 @@ export async function POST(req: NextRequest) {
 
       if (!emailResponse.ok) {
         const errorText = await emailResponse.text()
-        console.error('Failed to send email via Resend:', errorText)
+        console.error('Brevo email error:', errorText)
       } else {
-        console.log('Email sent successfully to:', receiver_email)
+        console.log('Email sent to:', receiver_email)
       }
     }
   } catch (emailError) {
     console.error('Failed to send email:', emailError)
-    // Don't fail the order creation if email fails
   }
 
   return NextResponse.json(order, { status: 201 })
