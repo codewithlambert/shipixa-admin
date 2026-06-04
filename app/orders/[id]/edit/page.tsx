@@ -185,6 +185,15 @@ export default function EditOrderPage() {
         return
       }
 
+      // Send email notification to receiver
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: id, type: 'created' }),
+        })
+      } catch {}
+
       setSuccess('Order updated successfully!')
       setTimeout(() => router.push(`/orders/${id}`), 1500)
     } catch (err) {
