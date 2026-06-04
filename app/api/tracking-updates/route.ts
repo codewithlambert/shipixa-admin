@@ -38,12 +38,22 @@ export async function POST(req: NextRequest) {
 
   // Send email notification
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/send-email`, {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shipixa.vercel.app'
+    const emailResponse = await fetch(`${siteUrl}/api/send-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ order_id })
     })
-  } catch {}
+    
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text()
+      console.error('[Tracking Updates API] Email sending failed:', errorText)
+    } else {
+      console.log('[Tracking Updates API] Email sent for order:', order_id)
+    }
+  } catch (error) {
+    console.error('[Tracking Updates API] Failed to send email notification:', error)
+  }
 
   return NextResponse.json(data, { status: 201 })
 }
