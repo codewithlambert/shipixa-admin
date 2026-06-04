@@ -76,10 +76,10 @@ export async function POST(req: NextRequest) {
   // Send welcome email to receiver with tracking code and link
   try {
     const brevoKey = process.env.BREVO_SMTP_KEY
-    const fromEmail = process.env.FROM_EMAIL || 'igweajurijosph@gmail.com'
+    const fromEmail = process.env.FROM_EMAIL || 'shipshipixa@gmail.com'
 
     if (!brevoKey) {
-      console.error('BREVO_SMTP_KEY not configured')
+      console.error('[Orders API] BREVO_SMTP_KEY not configured')
     } else {
       const trackingUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/track/${tracking_code}?email=${encodeURIComponent(receiver_email)}`
 
@@ -122,13 +122,14 @@ export async function POST(req: NextRequest) {
 
       if (!emailResponse.ok) {
         const errorText = await emailResponse.text()
-        console.error('Brevo email error:', errorText)
+        console.error('[Orders API] Brevo email error:', errorText)
       } else {
-        console.log('Email sent to:', receiver_email)
+        const result = await emailResponse.json()
+        console.log('[Orders API] Email sent to:', receiver_email, 'Message ID:', result.messageId)
       }
     }
   } catch (emailError) {
-    console.error('Failed to send email:', emailError)
+    console.error('[Orders API] Failed to send email:', emailError)
   }
 
   return NextResponse.json(order, { status: 201 })

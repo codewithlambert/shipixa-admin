@@ -5,10 +5,17 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const brevoKey = process.env.BREVO_SMTP_KEY
-    const fromEmail = process.env.FROM_EMAIL || 'igweajurijosph@gmail.com'
+    const fromEmail = process.env.FROM_EMAIL || 'shipshipixa@gmail.com'
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shipixa.vercel.app'
 
+    console.log('[Email API] Request received:', { 
+      hasOrderId: !!body.order_id, 
+      hasDirect: !!(body.to && body.subject), 
+      fromEmail 
+    })
+
     if (!brevoKey) {
+      console.error('[Email API] Missing BREVO_SMTP_KEY')
       return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
     }
 
@@ -21,11 +28,24 @@ export async function POST(req: NextRequest) {
         .eq('id', body.order_id)
         .single()
 
-      if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 })
-      if (!order.receiver_email) return NextResponse.json({ error: 'No receiver email' }, { status: 400 })
+      if (!order) {
+        console.error('[Email API] Order not found:', body.order_id)
+        return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+      }
+      if (!order.receiver_email) {
+        console.error('[Email API] No receiver email for order:', body.order_id)
+        return NextResponse.json({ error: 'No receiver email' }, { status: 400 })
+      }
 
       const trackingUrl = `${siteUrl}/track/${order.tracking_code}?email=${encodeURIComponent(order.receiver_email)}`
       const type = body.type || 'created'
+
+      console.log('[Email API] Sending email:', {
+        to: order.receiver_email,
+        trackingCode: order.tracking_code,
+        type,
+        from: fromEmail
+      })
 
       const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
@@ -67,18 +87,23 @@ export async function POST(req: NextRequest) {
 
       if (!response.ok) {
         const err = await response.text()
-        console.error('Brevo error:', err)
-        return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+        console.error('[Email API] Brevo error:', err)
+        return NextResponse.json({ error: 'Failed to send email', details: err }, { status: 500 })
       }
 
-      return NextResponse.json({ success: true })
+      const result = await response.json()
+      console.log('[Email API] Email sent successfully:', result)
+      return NextResponse.json({ success: true, messageId: result.messageId })
     }
 
     // Handle direct to/subject/html emails
     const { to, subject, html } = body
     if (!to || !subject || !html) {
+      console.error('[Email API] Missing fields:', { hasTo: !!to, hasSubject: !!subject, hasHtml: !!html })
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
+
+    console.log('[Email API] Sending direct email:', { to, subject, from: fromEmail })
 
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -93,13 +118,15 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const err = await response.text()
-      console.error('Brevo error:', err)
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+      console.error('[Email API] Brevo error:', err)
+      return NextResponse.json({ error: 'Failed to send email', details: err }, { status: 500 })
     }
 
-    return NextResponse.json({ success: true })
+    const result = await response.json()
+    console.log('[Email API] Email sent successfully:', result)
+    return NextResponse.json({ success: true, messageId: result.messageId })
   } catch (error) {
-    console.error('Send email error:', error)
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    console.error('[Email API] Send email error:', error)
+    return NextResponse.json({ error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
   }
 }
