@@ -1,42 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // Allow login page and API routes
-  if (pathname === '/login' || pathname.startsWith('/api/')) {
+  // Allow login page, static files and API routes
+  if (
+    pathname === '/login' ||
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.includes('favicon')
+  ) {
     return NextResponse.next()
   }
 
-  let res = NextResponse.next({ request: req })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll: () => req.cookies.getAll(),
-        setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value))
-          res = NextResponse.next({ request: req })
-          cookiesToSet.forEach(({ name, value, options }) => res.cookies.set(name, value, options))
-        },
-      },
-    }
+  // Check for Supabase session cookie
+  const hasSession = req.cookies.getAll().some(
+    c => c.name.includes('auth-token') || c.name.includes('sb-') 
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
+  if (!hasSession) {
     const loginUrl = req.nextUrl.clone()
     loginUrl.pathname = '/login'
     return NextResponse.redirect(loginUrl)
   }
 
-  return res
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|login).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
