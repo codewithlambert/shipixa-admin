@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminLayout from '@/components/AdminLayout'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { PackageIcon, Camera01Icon, Cancel01Icon } from '@hugeicons/core-free-icons'
 
 // Comprehensive currency list with country codes
 const CURRENCIES = [
@@ -322,14 +324,14 @@ export default function CreateOrderPage() {
     <AdminLayout>
       <div className="p-6 md:p-10 max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-gray-900">Create New Shipment</h1>
-          <p className="text-gray-400 text-sm mt-0.5">Fill in the shipment details below</p>
+          <h1 className="text-2xl font-extrabold text-white">Create New Shipment</h1>
+          <p className="text-white/40 text-sm mt-0.5">Fill in the shipment details below</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-[#141418] rounded-2xl border border-white/10 p-6 space-y-6">
           {/* Product Name */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Product Name *</label>
+            <label className="block text-sm font-bold text-white mb-2">Product Name *</label>
             <input
               type="text"
               name="product_name"
@@ -337,14 +339,14 @@ export default function CreateOrderPage() {
               onChange={handleChange}
               required
               placeholder="e.g., Electronics Package"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Sender & Receiver */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Sender Name *</label>
+              <label className="block text-sm font-bold text-white mb-2">Sender Name *</label>
               <input
                 type="text"
                 name="sender_name"
@@ -352,11 +354,11 @@ export default function CreateOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="John Doe"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Receiver Name *</label>
+              <label className="block text-sm font-bold text-white mb-2">Receiver Name *</label>
               <input
                 type="text"
                 name="receiver_name"
@@ -364,14 +366,14 @@ export default function CreateOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="Jane Smith"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
           </div>
 
           {/* Receiver Email */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Receiver Email *</label>
+            <label className="block text-sm font-bold text-white mb-2">Receiver Email *</label>
             <input
               type="email"
               name="receiver_email"
@@ -379,14 +381,14 @@ export default function CreateOrderPage() {
               onChange={handleChange}
               required
               placeholder="jane@example.com"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Origin & Destination */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Origin *</label>
+              <label className="block text-sm font-bold text-white mb-2">Origin *</label>
               <input
                 type="text"
                 name="origin"
@@ -394,11 +396,11 @@ export default function CreateOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="New York, NY"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Destination *</label>
+              <label className="block text-sm font-bold text-white mb-2">Destination *</label>
               <input
                 type="text"
                 name="destination"
@@ -406,27 +408,27 @@ export default function CreateOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="Los Angeles, CA"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
           </div>
 
           {/* Estimated Delivery */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Estimated Delivery</label>
+            <label className="block text-sm font-bold text-white mb-2">Estimated Delivery</label>
             <input
               type="datetime-local"
               name="estimated_delivery"
               value={formData.estimated_delivery}
               onChange={handleChange}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Price & Currency */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-bold text-gray-900 mb-2">Shipment Price</label>
+              <label className="block text-sm font-bold text-white mb-2">Shipment Price</label>
               <input
                 type="number"
                 name="price"
@@ -435,17 +437,17 @@ export default function CreateOrderPage() {
                 step="0.01"
                 min="0"
                 placeholder="0.00"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
-              <p className="text-xs text-gray-400 mt-1">Leave blank if no payment required</p>
+              <p className="text-xs text-white/40 mt-1">Leave blank if no payment required</p>
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Currency</label>
+              <label className="block text-sm font-bold text-white mb-2">Currency</label>
               <select
                 name="currency"
                 value={formData.currency}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               >
                 {CURRENCIES.map(curr => (
                   <option key={curr.code} value={curr.code}>
@@ -454,7 +456,7 @@ export default function CreateOrderPage() {
                 ))}
               </select>
               {detectedCountry && (
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-white/40 mt-1">
                   Auto-detected from your location: {detectedCountry}
                 </p>
               )}
@@ -463,28 +465,31 @@ export default function CreateOrderPage() {
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Description</label>
+            <label className="block text-sm font-bold text-white mb-2">Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={3}
               placeholder="Additional notes about the shipment..."
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25 resize-none"
             />
           </div>
 
           {/* Packages Section */}
-          <div className="border-t border-gray-200 pt-6">
+          <div className="border-t border-white/10 pt-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-extrabold text-gray-900">📦 Packages</h3>
-                <p className="text-xs text-gray-400 mt-0.5">{packages.length} package(s) in this shipment</p>
+                <h3 className="flex items-center gap-2 text-lg font-extrabold text-white">
+                  <HugeiconsIcon icon={PackageIcon} size={18} color="currentColor" />
+                  Packages
+                </h3>
+                <p className="text-xs text-white/40 mt-0.5">{packages.length} package(s) in this shipment</p>
               </div>
               <button
                 type="button"
                 onClick={addPackage}
-                className="text-sm font-bold text-orange-500 hover:text-orange-600 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-xl transition"
+                className="text-sm font-bold text-orange-500 hover:text-orange-600 bg-[#f2662d]/10 hover:bg-[#f2662d]/20 px-4 py-2 rounded-xl transition"
               >
                 + Add Package
               </button>
@@ -492,14 +497,14 @@ export default function CreateOrderPage() {
 
             <div className="space-y-6">
               {packages.map((pkg, pkgIndex) => (
-                <div key={pkg.id} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                <div key={pkg.id} className="bg-[#1c1c1f] rounded-xl p-5 border border-white/10">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="font-bold text-gray-900">Package {pkgIndex + 1}</h4>
+                    <h4 className="font-bold text-white">Package {pkgIndex + 1}</h4>
                     {packages.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removePackage(pkg.id)}
-                        className="text-xs font-bold text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"
+                        className="text-xs font-bold text-red-400 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition"
                       >
                         Remove
                       </button>
@@ -509,20 +514,20 @@ export default function CreateOrderPage() {
                   <div className="space-y-4">
                     {/* Package Name */}
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Package Name</label>
+                      <label className="block text-sm font-bold text-white/70 mb-2">Package Name</label>
                       <input
                         type="text"
                         value={pkg.package_name}
                         onChange={(e) => updatePackage(pkg.id, 'package_name', e.target.value)}
                         placeholder="e.g., Box 1, Laptop Package"
-                        className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
                       />
                     </div>
 
                     {/* Weight & Dimensions */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2">Weight (kg)</label>
+                        <label className="block text-sm font-bold text-white/70 mb-2">Weight (kg)</label>
                         <input
                           type="number"
                           value={pkg.weight}
@@ -530,37 +535,37 @@ export default function CreateOrderPage() {
                           step="0.01"
                           min="0"
                           placeholder="0.00"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                          className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2">Dimensions</label>
+                        <label className="block text-sm font-bold text-white/70 mb-2">Dimensions</label>
                         <input
                           type="text"
                           value={pkg.dimensions}
                           onChange={(e) => updatePackage(pkg.id, 'dimensions', e.target.value)}
                           placeholder="e.g., 30x20x10 cm"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                          className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
                         />
                       </div>
                     </div>
 
                     {/* Package Description */}
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Package Description</label>
+                      <label className="block text-sm font-bold text-white/70 mb-2">Package Description</label>
                       <textarea
                         value={pkg.description}
                         onChange={(e) => updatePackage(pkg.id, 'description', e.target.value)}
                         rows={2}
                         placeholder="Contents of this package..."
-                        className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+                        className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25 resize-none"
                       />
                     </div>
 
                     {/* Package Images */}
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Package Images</label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-orange-300 transition">
+                      <label className="block text-sm font-bold text-white/70 mb-2">Package Images</label>
+                      <div className="bg-[#1c1c1f] border-2 border-dashed border-white/15 rounded-xl p-4 text-center hover:border-orange-400/50 transition">
                         <input
                           type="file"
                           accept="image/*"
@@ -575,11 +580,11 @@ export default function CreateOrderPage() {
                           className={`cursor-pointer ${pkg.selectedFiles.length >= 10 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                           <div className="flex flex-col items-center gap-1.5">
-                            <span className="text-2xl">📸</span>
-                            <p className="text-xs font-bold text-gray-600">
+                            <HugeiconsIcon icon={Camera01Icon} size={26} color="white" className="opacity-60" />
+                            <p className="text-xs font-bold text-white/60">
                               {pkg.selectedFiles.length >= 10 ? 'Maximum 10 images reached' : 'Click to upload images'}
                             </p>
-                            <p className="text-xs text-gray-400">PNG, JPG, GIF up to 5MB each (max 10 per package)</p>
+                            <p className="text-xs text-white/40">PNG, JPG, GIF up to 5MB each (max 10 per package)</p>
                           </div>
                         </label>
                       </div>
@@ -592,14 +597,14 @@ export default function CreateOrderPage() {
                               <img
                                 src={url}
                                 alt={`Package ${pkgIndex + 1} - Image ${index + 1}`}
-                                className="w-full h-20 object-cover rounded-lg border border-gray-200"
+                                className="w-full h-20 object-cover rounded-lg border border-white/10"
                               />
                               <button
                                 type="button"
                                 onClick={() => removePackageImage(pkg.id, index)}
-                                className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition"
+                                className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                               >
-                                ✕
+                                <HugeiconsIcon icon={Cancel01Icon} size={11} color="white" />
                               </button>
                             </div>
                           ))}
@@ -614,16 +619,16 @@ export default function CreateOrderPage() {
 
           {/* Error/Success Messages */}
           {error && (
-            <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-red-500 text-xs">⚠</span>
-              <p className="text-red-500 text-xs font-medium">{error}</p>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-red-400 text-xs">⚠</span>
+              <p className="text-red-400 text-xs font-medium">{error}</p>
             </div>
           )}
 
           {success && (
-            <div className="bg-green-50 border border-green-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-green-500 text-xs">✓</span>
-              <p className="text-green-500 text-xs font-medium">{success}</p>
+            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-emerald-400 text-xs">✓</span>
+              <p className="text-emerald-400 text-xs font-medium">{success}</p>
             </div>
           )}
 
@@ -632,14 +637,14 @@ export default function CreateOrderPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50 py-3 rounded-xl font-bold text-sm transition"
+              className="flex-1 border border-white/10 text-white/60 hover:bg-[#1c1c1f] py-3 rounded-xl font-bold text-sm transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || uploadingImages}
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 shadow-lg shadow-orange-100"
+              className="flex-1 bg-[#f2662d] hover:brightness-105 text-black py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 "
             >
               {uploadingImages ? 'Uploading Images...' : loading ? 'Creating...' : 'Create Shipment'}
             </button>

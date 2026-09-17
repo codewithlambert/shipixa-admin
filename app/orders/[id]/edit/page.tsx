@@ -210,7 +210,7 @@ export default function EditOrderPage() {
     return (
       <AdminLayout>
         <div className="p-10 text-center">
-          <p className="text-gray-400">Loading order...</p>
+          <p className="text-white/40">Loading order...</p>
         </div>
       </AdminLayout>
     )
@@ -220,14 +220,14 @@ export default function EditOrderPage() {
     <AdminLayout>
       <div className="p-6 md:p-10 max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-gray-900">Edit Order</h1>
-          <p className="text-gray-400 text-sm mt-0.5">Update order details and pricing</p>
+          <h1 className="text-2xl font-extrabold text-white">Edit Order</h1>
+          <p className="text-white/40 text-sm mt-0.5">Update order details and pricing</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-[#141418] rounded-2xl border border-white/10 p-6 space-y-6">
           {/* Product Name */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Product Name *</label>
+            <label className="block text-sm font-bold text-white mb-2">Product Name *</label>
             <input
               type="text"
               name="product_name"
@@ -235,14 +235,14 @@ export default function EditOrderPage() {
               onChange={handleChange}
               required
               placeholder="e.g., Electronics Package"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Sender & Receiver */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Sender Name *</label>
+              <label className="block text-sm font-bold text-white mb-2">Sender Name *</label>
               <input
                 type="text"
                 name="sender_name"
@@ -250,11 +250,11 @@ export default function EditOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="John Doe"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Receiver Name *</label>
+              <label className="block text-sm font-bold text-white mb-2">Receiver Name *</label>
               <input
                 type="text"
                 name="receiver_name"
@@ -262,14 +262,14 @@ export default function EditOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="Jane Smith"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
           </div>
 
           {/* Receiver Email */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Receiver Email *</label>
+            <label className="block text-sm font-bold text-white mb-2">Receiver Email *</label>
             <input
               type="email"
               name="receiver_email"
@@ -277,14 +277,14 @@ export default function EditOrderPage() {
               onChange={handleChange}
               required
               placeholder="jane@example.com"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Origin & Destination */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Origin *</label>
+              <label className="block text-sm font-bold text-white mb-2">Origin *</label>
               <input
                 type="text"
                 name="origin"
@@ -292,11 +292,11 @@ export default function EditOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="New York, NY"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Destination *</label>
+              <label className="block text-sm font-bold text-white mb-2">Destination *</label>
               <input
                 type="text"
                 name="destination"
@@ -304,27 +304,27 @@ export default function EditOrderPage() {
                 onChange={handleChange}
                 required
                 placeholder="Los Angeles, CA"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
           </div>
 
           {/* Estimated Delivery */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Estimated Delivery</label>
+            <label className="block text-sm font-bold text-white mb-2">Estimated Delivery</label>
             <input
               type="datetime-local"
               name="estimated_delivery"
               value={formData.estimated_delivery}
               onChange={handleChange}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Price & Currency */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-bold text-gray-900 mb-2">Shipment Price</label>
+              <label className="block text-sm font-bold text-white mb-2">Shipment Price</label>
               <input
                 type="number"
                 name="price"
@@ -333,17 +333,17 @@ export default function EditOrderPage() {
                 step="0.01"
                 min="0"
                 placeholder="0.00"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
-              <p className="text-xs text-gray-400 mt-1">Leave blank to remove payment requirement</p>
+              <p className="text-xs text-white/40 mt-1">Leave blank to remove payment requirement</p>
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Currency</label>
+              <label className="block text-sm font-bold text-white mb-2">Currency</label>
               <select
                 name="currency"
                 value={formData.currency}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               >
                 {CURRENCIES.map(curr => (
                   <option key={curr.code} value={curr.code}>
@@ -356,29 +356,29 @@ export default function EditOrderPage() {
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Description</label>
+            <label className="block text-sm font-bold text-white mb-2">Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={3}
               placeholder="Additional notes about the shipment..."
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25 resize-none"
             />
           </div>
 
           {/* Error/Success Messages */}
           {error && (
-            <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-red-500 text-xs">⚠</span>
-              <p className="text-red-500 text-xs font-medium">{error}</p>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-red-400 text-xs">⚠</span>
+              <p className="text-red-400 text-xs font-medium">{error}</p>
             </div>
           )}
 
           {success && (
-            <div className="bg-green-50 border border-green-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-green-500 text-xs">✓</span>
-              <p className="text-green-500 text-xs font-medium">{success}</p>
+            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-emerald-400 text-xs">✓</span>
+              <p className="text-emerald-400 text-xs font-medium">{success}</p>
             </div>
           )}
 
@@ -387,14 +387,14 @@ export default function EditOrderPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50 py-3 rounded-xl font-bold text-sm transition"
+              className="flex-1 border border-white/10 text-white/60 hover:bg-[#1c1c1f] py-3 rounded-xl font-bold text-sm transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 shadow-lg shadow-orange-100"
+              className="flex-1 bg-[#f2662d] hover:brightness-105 text-black py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 "
             >
               {loading ? 'Updating...' : 'Update Order'}
             </button>

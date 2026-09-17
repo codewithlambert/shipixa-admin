@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import AdminLayout from '@/components/AdminLayout'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { CreditCardIcon } from '@hugeicons/core-free-icons'
 
 const STATUSES = ['Pending', 'Picked Up', 'In Transit', 'Arrived at Facility', 'Out for Delivery', 'Delivered']
 
@@ -168,7 +170,7 @@ export default function UpdateOrderPage() {
     return (
       <AdminLayout>
         <div className="p-10 text-center">
-          <p className="text-gray-400">Loading...</p>
+          <p className="text-white/40">Loading...</p>
         </div>
       </AdminLayout>
     )
@@ -178,22 +180,22 @@ export default function UpdateOrderPage() {
     <AdminLayout>
       <div className="p-6 md:p-10 max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-gray-900">Add Tracking Update</h1>
-          <p className="text-gray-400 text-sm mt-0.5">
+          <h1 className="text-2xl font-extrabold text-white">Add Tracking Update</h1>
+          <p className="text-white/40 text-sm mt-0.5">
             {order.product_name} • {order.tracking_code}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-[#141418] rounded-2xl border border-white/10 p-6 space-y-6">
           {/* Status */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Status *</label>
+            <label className="block text-sm font-bold text-white mb-2">Status *</label>
             <select
               name="status"
               value={formData.status}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             >
               {STATUSES.map(s => (
                 <option key={s} value={s}>{s}</option>
@@ -203,50 +205,53 @@ export default function UpdateOrderPage() {
 
           {/* Event Label */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Event Label</label>
+            <label className="block text-sm font-bold text-white mb-2">Event Label</label>
             <input
               type="text"
               name="event_label"
               value={formData.event_label}
               onChange={handleChange}
               placeholder="e.g., Package arrived at sorting facility"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
-            <p className="text-xs text-gray-400 mt-1">Leave blank to use status as label</p>
+            <p className="text-xs text-white/40 mt-1">Leave blank to use status as label</p>
           </div>
 
           {/* Location */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Location</label>
+            <label className="block text-sm font-bold text-white mb-2">Location</label>
             <input
               type="text"
               name="location"
               value={formData.location}
               onChange={handleChange}
               placeholder="e.g., Newark, NJ"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-bold text-gray-900 mb-2">Description</label>
+            <label className="block text-sm font-bold text-white mb-2">Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={3}
               placeholder="Additional details about this update..."
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
+              className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25 resize-none"
             />
           </div>
 
           {/* Price & Currency */}
-          <div className="border-t border-gray-100 pt-6">
-            <h3 className="text-sm font-bold text-gray-900 mb-4">💰 Update Shipment Price (Optional)</h3>
+          <div className="border-t border-white/10 pt-6">
+            <h3 className="flex items-center gap-2 text-sm font-bold text-white mb-4">
+              <HugeiconsIcon icon={CreditCardIcon} size={16} color="currentColor" />
+              Update Shipment Price (Optional)
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-900 mb-2">Price</label>
+                <label className="block text-sm font-bold text-white mb-2">Price</label>
                 <input
                   type="number"
                   name="price"
@@ -255,17 +260,17 @@ export default function UpdateOrderPage() {
                   step="0.01"
                   min="0"
                   placeholder="0.00"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
                 />
-                <p className="text-xs text-gray-400 mt-1">Update or set shipment price</p>
+                <p className="text-xs text-white/40 mt-1">Update or set shipment price</p>
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-900 mb-2">Currency</label>
+                <label className="block text-sm font-bold text-white mb-2">Currency</label>
                 <select
                   name="currency"
                   value={formData.currency}
                   onChange={handleChange}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
                 >
                   {CURRENCIES.map(curr => (
                     <option key={curr.code} value={curr.code}>
@@ -284,11 +289,11 @@ export default function UpdateOrderPage() {
               name="is_expected"
               checked={formData.is_expected}
               onChange={handleChange}
-              className="mt-1 w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-400"
+              className="mt-1 w-4 h-4 text-orange-500 border-white/20 bg-[#1c1c1f] rounded focus:ring-orange-400"
             />
             <div>
-              <label className="block text-sm font-bold text-gray-900">Expected Update</label>
-              <p className="text-xs text-gray-400 mt-0.5">
+              <label className="block text-sm font-bold text-white">Expected Update</label>
+              <p className="text-xs text-white/40 mt-0.5">
                 Mark this as a future/expected update (won't change current status)
               </p>
             </div>
@@ -297,29 +302,29 @@ export default function UpdateOrderPage() {
           {/* Expected Time (only if is_expected) */}
           {formData.is_expected && (
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2">Expected Time</label>
+              <label className="block text-sm font-bold text-white mb-2">Expected Time</label>
               <input
                 type="datetime-local"
                 name="expected_time"
                 value={formData.expected_time}
                 onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 text-white placeholder:text-white/25"
               />
             </div>
           )}
 
           {/* Error/Success Messages */}
           {error && (
-            <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-red-500 text-xs">⚠</span>
-              <p className="text-red-500 text-xs font-medium">{error}</p>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-red-400 text-xs">⚠</span>
+              <p className="text-red-400 text-xs font-medium">{error}</p>
             </div>
           )}
 
           {success && (
-            <div className="bg-green-50 border border-green-100 rounded-xl px-4 py-3 flex items-center gap-2">
-              <span className="text-green-500 text-xs">✓</span>
-              <p className="text-green-500 text-xs font-medium">Update added successfully!</p>
+            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 flex items-center gap-2">
+              <span className="text-emerald-400 text-xs">✓</span>
+              <p className="text-emerald-400 text-xs font-medium">Update added successfully!</p>
             </div>
           )}
 
@@ -328,14 +333,14 @@ export default function UpdateOrderPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50 py-3 rounded-xl font-bold text-sm transition"
+              className="flex-1 border border-white/10 text-white/60 hover:bg-[#1c1c1f] py-3 rounded-xl font-bold text-sm transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 shadow-lg shadow-orange-100"
+              className="flex-1 bg-[#f2662d] hover:brightness-105 text-black py-3 rounded-xl font-bold text-sm transition disabled:opacity-50 "
             >
               {loading ? 'Adding...' : 'Add Update'}
             </button>
