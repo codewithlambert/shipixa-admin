@@ -1,10 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { ViewIcon, ViewOffIcon } from '@hugeicons/core-free-icons'
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -75,14 +78,24 @@ export default function AdminLoginPage() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-white mb-1.5">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="w-full bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
-              />
+              <div className="flex items-center gap-2 bg-[#1c1c1f] border border-white/10 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-orange-400">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                  className="flex-1 min-w-0 bg-transparent text-sm text-white placeholder-white/25 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  className="text-white/40 hover:text-white/70 shrink-0 transition"
+                >
+                  <HugeiconsIcon icon={showPassword ? ViewOffIcon : ViewIcon} size={17} color="currentColor" />
+                </button>
+              </div>
             </div>
 
             {error && (
