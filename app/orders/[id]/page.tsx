@@ -4,6 +4,7 @@ import AdminLayout from '@/components/AdminLayout'
 import StatusBadge from '@/components/StatusBadge'
 import TrackingTimeline from '@/components/TrackingTimeline'
 import CopyButton from '@/components/CopyButton'
+import ConfirmPaymentButton from '@/components/ConfirmPaymentButton'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { InboxIcon, ArrowLeft01Icon, Edit02Icon, PinLocation01Icon } from '@hugeicons/core-free-icons'
 
@@ -119,6 +120,15 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                 <p className="text-2xl font-extrabold text-white">{updates.length}</p>
                 <p className="text-xs text-white/40 mt-1 font-medium">Updates</p>
               </div>
+            </div>
+
+            {/* Payment */}
+            <div className="bg-[#141418] rounded-2xl border border-white/10 p-6">
+              <p className="text-white/40 text-xs mb-1">Payment</p>
+              <p className={`font-bold text-sm mb-4 ${order.payment_status === 'paid' ? 'text-emerald-300' : 'text-amber-300'}`}>
+                {order.payment_status === 'paid' ? 'Paid — crypto payment confirmed' : 'Awaiting crypto payment confirmation'}
+              </p>
+              {order.payment_status !== 'paid' && <ConfirmPaymentButton orderId={order.id} />}
             </div>
 
             {/* Packages */}
